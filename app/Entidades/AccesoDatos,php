@@ -4,16 +4,12 @@ class AccesoDatos
 {
     private static $objAccesoDatos;
     private $objetoPDO;
-    public  $servername = "localhost";
-    public  $username = "username";
-    public  $password = "password";
-
 
     private function __construct()
     {
         try 
         {
-            $this->objetoPDO = new PDO("mysql:host=$servername;dbname=myDB", $username, $password);
+            $this->objetoPDO = new PDO("mysql:host=localhost;dbname=Comanda", 'root', '');
             $this->objetoPDO->exec("SET CHARACTER SET utf8");
         }    
         catch (PDOException $e) {
