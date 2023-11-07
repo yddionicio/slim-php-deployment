@@ -9,6 +9,9 @@ use Slim\Factory\AppFactory;
 use Slim\Routing\RouteCollectorProxy;
 
 require __DIR__ . '/../vendor/autoload.php';
+require_once './Entidades/EmpleadoController.php';
+//require_once './';
+
 
 // Instantiate App
 $app = AppFactory::create();
@@ -27,7 +30,7 @@ $app->get('[/]', function (Request $request, Response $response) {
 });
 
 $app->get('/test', function (Request $request, Response $response) {
-    $payload = json_encode(array('method' => 'GET', 'msg' => "Bienvenido a SlimFramework 2023"));
+    $payload = json_encode(array('method' => 'GET', 'msg' => "Bienvenido a SlimFramework 2023 test"));
     $response->getBody()->write($payload);
     return $response->withHeader('Content-Type', 'application/json');
 });
@@ -43,5 +46,12 @@ $app->post('/test', function (Request $request, Response $response) {
     $response->getBody()->write($payload);
     return $response->withHeader('Content-Type', 'application/json');
 });
-// comentario
+
+$app->group('/usuarios', function (RouteCollectorProxy $group){
+    //Alta
+    $group->post('/altaUsuario', \EmpleadoController::class . ':AltaUsuario');
+});
+
+$app->post('/altaUsuario', \EmpleadoController::class . ':AltaUsuario');
+
 $app->run();
