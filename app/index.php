@@ -9,8 +9,7 @@ use Slim\Factory\AppFactory;
 use Slim\Routing\RouteCollectorProxy;
 
 require __DIR__ . '/../vendor/autoload.php';
-require_once './Entidades/EmpleadoController.php';
-//require_once './';
+//require_once "./Entidades/EmpleadoController.php";
 
 
 // Instantiate App
@@ -49,9 +48,9 @@ $app->post('/test', function (Request $request, Response $response) {
 
 $app->group('/usuarios', function (RouteCollectorProxy $group){
     //Alta
-    $group->post('/altaUsuario', \EmpleadoController::class . ':AltaUsuario');
+    $group->post('/altaUsuario', \EmpleadoController::class . ':CargarUno');
 });
 
-$app->post('/altaUsuario', \EmpleadoController::class . ':AltaUsuario');
+$app->post('/altaUsuario', \EmpleadoController::class . ':CargarUno');
 
 $app->run();

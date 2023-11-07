@@ -1,5 +1,5 @@
 <?php
-
+require_once "./Entidades/AccesoDatos.php";
 class Empleado
 {
     public $legajo;
@@ -9,18 +9,6 @@ class Empleado
     public $fechaAlta;
     public $horaAlta;
     public $fechaBaja;
-
-
-    /*public function __construct($legajo, $nombre, $perfilEmpleado, $clave, $fechaAlta, $horaAlta, $fechaBaja) {
-        
-        $this->legajo = $legajo;
-        $this->nombre = $nombre;
-        $this->perfilEmpleado = $perfilEmpleado;
-        $this->clave = $clave;
-        $this->fechaAlta = $fechaAlta;
-        $this->horaAlta = $horaAlta;
-        $this->fechaBaja = $fechaBaja;
-    }*/
 
 
     public function AltaUsuario(){

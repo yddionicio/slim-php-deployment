@@ -5,6 +5,8 @@ require_once './models/Empleado.php';
 class EmpleadoController extends Empleado
 {
     public $tipoPerfiles = ["bartender","cervecero","cocinero","mozo","socio"];
+
+
     public function CargarUno($request, $response, $args)
     {
         $parametros = $request->getParsedBody();
@@ -40,14 +42,5 @@ class EmpleadoController extends Empleado
           ->withHeader('Content-Type', 'application/json');
     }
 
-   /* public function TraerTodos($request, $response, $args)
-    {
-        $lista = Empleado::obtenerTodos();
-        $payload = json_encode(array("listaDeEmpleados" => $lista));
-
-        $response->getBody()->write($payload);
-        return $response
-          ->withHeader('Content-Type', 'application/json');
-    }*/
 
 }
