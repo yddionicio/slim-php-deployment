@@ -9,7 +9,7 @@ class AccesoDatos
     {
         try 
         {
-            $this->objetoPDO = new PDO("mysql:host=localhost;dbname=Comanda", 'root', '');
+            $this->objetoPDO = new PDO("mysql:host=localhost;dbname=Comanda;port=3307",'root', '');
             $this->objetoPDO->exec("SET CHARACTER SET utf8");
         }    
         catch (PDOException $e) {
@@ -24,6 +24,21 @@ class AccesoDatos
             self::$objAccesoDatos = new AccesoDatos();
         }
         return self::$objAccesoDatos;
+    }
+
+    public function prepararConsulta($sql)
+    {
+        return $this->objetoPDO->prepare($sql);
+    }
+
+    public function obtenerUltimoId()
+    {
+        return $this->objetoPDO->lastInsertId();
+    }
+
+    public function __clone()
+    {
+        trigger_error('ERROR: La clonación de este objeto no está permitida', E_USER_ERROR);
     }
 
 }

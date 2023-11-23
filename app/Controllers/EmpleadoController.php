@@ -1,5 +1,5 @@
 <?php
-require_once './models/Empleado.php';
+require_once './Models/Empleado.php';
 //require_once './interfaces/IApiUsable.php';
 
 class EmpleadoController extends Empleado
@@ -10,7 +10,7 @@ class EmpleadoController extends Empleado
     public function CargarUno($request, $response, $args)
     {
         $parametros = $request->getParsedBody();
-
+        //var_dump($parametros);
         $nombre = $parametros['nombre'];
         $perfilEmpleado = $parametros["perfilEmpleado"];
         $clave = $parametros["clave"];
@@ -41,6 +41,23 @@ class EmpleadoController extends Empleado
         return $response
           ->withHeader('Content-Type', 'application/json');
     }
+
+    public function BorrarUno($request, $response, $args)
+    {
+
+        $datos = json_decode(file_get_contents("php://input"), true);
+        $usuarioId = $datos['id'];
+        if(Empleado::borrarEmpleado($usuarioId)==1){
+          $payload = json_encode(array("mensaje" => "Usuario borrado con exito"));
+        }else{
+          $payload = json_encode(array("mensaje" => "Error, verifique la información"));
+        }
+        $response->getBody()->write($payload);
+        return $response
+          ->withHeader('Content-Type', 'application/json');
+    }
+
+
 
 
 }

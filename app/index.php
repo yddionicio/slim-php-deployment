@@ -9,7 +9,11 @@ use Slim\Factory\AppFactory;
 use Slim\Routing\RouteCollectorProxy;
 
 require __DIR__ . '/../vendor/autoload.php';
-//require_once "./Entidades/EmpleadoController.php";
+include_once './Controllers/EmpleadoController.php';
+include_once './Controllers/AutentificadorController.php';
+include_once './Middlewares/CheckSocioMiddleware.php';
+include_once './Middlewares/CheckTokenMiddleware.php';
+//require_once "./Controllers/EmpleadoController.php";
 
 
 // Instantiate App
@@ -48,9 +52,14 @@ $app->post('/test', function (Request $request, Response $response) {
 
 $app->group('/usuarios', function (RouteCollectorProxy $group){
     //Alta
-    $group->post('/altaUsuario', \EmpleadoController::class . ':CargarUno');
-});
+    $group->post('/altaUsuario', \EmpleadoController::class . ':CargarUno')->add(new CheckSocioMiddleware); // verifica que el token pertenezca a un socio 
+    $group->delete('/eliminarUsuario', \EmpleadoController::class . ':BorrarUno');
+})->add(new CheckTokenMiddleware); //token generico valido
 
-$app->post('/altaUsuario', \EmpleadoController::class . ':CargarUno');
+$app->post('/CrearToken', \AutentificadorController::class . ':CrearTokenLogin');
+
+
+
+//$app->post('/altaUsuario', \EmpleadoController::class . ':CargarUno');
 
 $app->run();
