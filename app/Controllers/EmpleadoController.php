@@ -33,7 +33,8 @@ class EmpleadoController extends Empleado
             {
                 $payload = json_encode(array("mensaje" => "Perfil de empleado ingresado invalido"));
             }
-        }catch(\Throwable $ex)
+        }
+        catch(\Throwable $ex)
         {
             $payload=json_encode(array("mensaje" => $ex->getMessage()));
         }
@@ -57,6 +58,15 @@ class EmpleadoController extends Empleado
           ->withHeader('Content-Type', 'application/json');
     }
 
+    public function TraerTodos($request, $response, $args)
+    {
+        $lista = Empleado::obtenerTodos();
+        $payload = json_encode(array("listaDeEmpleados" => $lista));
+
+        $response->getBody()->write($payload);
+        return $response
+          ->withHeader('Content-Type', 'application/json');
+    }
 
 
 

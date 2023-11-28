@@ -4,14 +4,17 @@ require_once './Models/AutentificadorJWT.php';
 
 class AutentificadorController extends AutentificadorJWT
 {
+
+
+
     public function CrearTokenLogin ($request, $response,$args)
     {
         $parametros = $request->getParsedBody();
         $usuarioBaseDeDatos=Empleado::obtenerEmpleadoPorLegajo($parametros["id"]); //legajo
-        if($usuarioBaseDeDatos !=null)
+
+        if($usuarioBaseDeDatos != null)
         {
-            if($parametros["contraseña"] === $usuarioBaseDeDatos->clave //clave 
-            && ($usuarioBaseDeDatos->fechaBaja < 1))
+            if($parametros["contraseña"] === $usuarioBaseDeDatos->clave && ($usuarioBaseDeDatos->fechaBaja < 1))
             {
                 $datos = array('legajo'=> $usuarioBaseDeDatos->legajo,'usuario' => $usuarioBaseDeDatos->nombre, 'clave' => $usuarioBaseDeDatos->clave
                 ,"perfil_usuario"=> $usuarioBaseDeDatos->perfilEmpleado);

@@ -53,4 +53,26 @@ class Empleado
         return $consulta->fetchObject('Empleado');
     }
 
+
+    public static function obtenerTodos()
+    {
+        $objAccesoDatos = AccesoDatos::obtenerInstancia();
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT * FROM empleado");
+        $consulta->execute();
+
+        return $consulta->fetchAll(PDO::FETCH_CLASS, 'Empleado');
+    }
+
+
+    public static function obtenerEmpleadosPorTipo($idProducto)
+    {
+
+        $objAccesoDatos = AccesoDatos::obtenerInstancia();
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT * FROM trabajadores 
+        WHERE perfilEmpleado = (SELECT tipo from menu WHERE idProducto = :idProducto)");
+        $consulta->bindValue(':idProducto', $idProducto, PDO::PARAM_INT);
+        $consulta->execute();
+        return $consulta->fetchAll(PDO::FETCH_CLASS, 'Empleado');
+    }
+
 }

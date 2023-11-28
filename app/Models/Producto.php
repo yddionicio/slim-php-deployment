@@ -10,7 +10,7 @@ class Producto
     public function AltaProducto()
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO menu (idProducto,nombre,precio,tipo) 
+        $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO producto (idProducto,nombre,precio,tipo) 
         VALUES (:idProducto,:nombre, :precio, :tipo) ON DUPLICATE KEY UPDATE nombre = :nombreDos, precio=:precioDos,tipo=:tipoDos");
         $consulta->bindValue(':nombre', $this->nombre, PDO::PARAM_STR);
         $consulta->bindValue(':precio', $this->precio, PDO::PARAM_STR);
@@ -28,7 +28,7 @@ class Producto
     public static function obtenerProductoPorId($id)
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("SELECT * FROM menu WHERE idProducto = :id");
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT * FROM producto WHERE idProducto = :id");
         $consulta->bindValue(':id', $id, PDO::PARAM_STR);
         $consulta->execute();
 
@@ -36,4 +36,12 @@ class Producto
     }
 
 
+    public static function obtenerTodos()
+    {
+        $objAccesoDatos = AccesoDatos::obtenerInstancia();
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT * FROM menu");
+        $consulta->execute();
+
+        return $consulta->fetchAll(PDO::FETCH_CLASS, 'Producto');
+    }
 }
